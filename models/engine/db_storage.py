@@ -63,6 +63,26 @@ class DBStorage:
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
+    def get(self, cls, id):
+        """
+        fetches specific object 
+        :param cls: class of object string.
+        :return: found object or None
+        """
+        all_class = self.all(cls)
+
+        for obj in all_class.values():
+            if id == str(obj.id):
+                return obj
+
+        return None
+    def count(self, cls=None):
+        """
+        count how many instance of a class
+        :param cls: class name
+        :return count the number of instances of a class
+        """
+        return len(self.all(cls))
 
     def reload(self):
         """reloads data from the database"""
